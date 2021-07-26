@@ -3,5 +3,3 @@
 import '../Server.Config'
 import HttpServe from './HttpServe/index'
 HttpServe()
-console.log('测试结果哦！')
-console.log('测试结果哦！')
