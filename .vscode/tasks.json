@@ -1,0 +1,29 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for thedocumentation about the tasks.json format
+  "version": "2.0.0",
+  // "command": "yarn run tsc",
+  //-p 指定目录；-w watch,检测文件改变自动编译
+  "args": ["-p", ".", "-w"],
+  "problemMatcher": "$tsc",
+  "tasks": [
+    {
+      "type": "typescript",
+      "tsconfig": "tsconfig.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"],
+      "group": "build",
+      "label": "tsc监视"
+    },
+    {
+      "type": "typescript",
+      "tsconfig": "tsconfig.json",
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "tsc构建"
+    }
+  ]
+}
