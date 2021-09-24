@@ -70,23 +70,39 @@ export default class Postgres {
       this.dbServer.release()
     }
   }
-
+  public async QueryBySql<T>(sql: string, values: string[] = []): Promise<Array<T>> {
+    let result: Array<T> = []
+    const _result = await this.dbServer.query(sql, values)
+    if (_result.rows) {
+      result = _result.rows as Array<T>
+    }
+    debugger
+    return result
+  }
   public async executeTrans(TRANS: Function) {
     try {
-      await this.pgConnect()
-      await this.dbServer.query('BEGIN')
-      const res = await TRANS(this.dbServer)
-      this.dbServer.query('COMMIT')
-      return res
+      const isSuccess = await this.pgConnect()
+      if (isSuccess) {
+        await this.dbServer.query('BEGIN')
+        const res = await TRANS()
+        this.dbServer.query('COMMIT')
+        return res
+      } else {
+        console.error('连接数据库失败')
+      }
     } catch (e) {
-      await this.dbServer.query('ROLLBACK')
+      if (this.dbServer) {
+        await this.dbServer.query('ROLLBACK')
+      }
       throw e
     } finally {
       debugger
-      this.dbServer.release()
+      if (this.dbServer) {
+        this.dbServer.release()
+      }
       console.log('完成')
     }
   }
 
 }
-declare type ExecFun<T> = () => Promise<T></T>
+declare type ExecFun<T> = () => Promise<T>

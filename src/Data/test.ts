@@ -4,40 +4,22 @@ const pgconobj: pgConnectionObj = {
   user: 'postgres',
   host: '127.0.0.1',
   database: 'postgres',
-  password: '12345',
+  password: '123456',
   port: '5432',
 }
 
 const pg = new Postgres(pgconobj, false)
-pg.pgConnect()
+// pg.pgConnect()
+declare type Person = {
+  id: number;
+  name: string;
+  age: number;
+}
 
-pg.executeTrans(async (db) => {
-  const result = await db.query('select now() as kms')
+pg.executeTrans(async () => {
+  const result = await pg.QueryBySql<Person>(`select id::int,name::text,age::int from public.person`)
+  // pg.QueryBySql<Person>(`select 1 as kms,369 as num`)
+  //await db.query(`select * from public.query_persons();`)
+  debugger
   console.log('result=>', result)
 })
-
-
-// const { Pool } = require('pg')
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: '127.0.0.1',
-//   database: 'postgres',
-//   password: '123456',
-//   port: '5432',
-// })
-//   ; (async () => {
-//     // note: we don't try/catch this because if connecting throws an exception
-//     // we don't need to dispose of the client (it will be undefined)
-//     const client = await pool.connect()
-//     debugger
-//     try {
-//       await client.query('BEGIN')
-//       await client.query('select now()')
-//       await client.query('COMMIT')
-//     } catch (e) {
-//       await client.query('ROLLBACK')
-//       throw e
-//     } finally {
-//       client.release()
-//     }
-//   })().catch(e => console.error(e.stack))
