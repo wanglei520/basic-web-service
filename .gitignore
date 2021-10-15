@@ -3,3 +3,4 @@ dist
 .local
 # local env files
 .env.local
+logs

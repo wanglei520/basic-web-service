@@ -14,7 +14,7 @@ export default class Postgres {
     }
 
   }
-  public async pgConnect() {
+  public async pgConnect(): Promise<Boolean> {
 
     let isSuccess: Boolean = false
     try {
@@ -79,29 +79,37 @@ export default class Postgres {
     debugger
     return result
   }
-  public async executeTrans(TRANS: Function) {
-    try {
-      const isSuccess = await this.pgConnect()
-      if (isSuccess) {
-        await this.dbServer.query('BEGIN')
-        const res = await TRANS()
-        this.dbServer.query('COMMIT')
-        return res
-      } else {
-        console.error('连接数据库失败')
+  public async executeTrans(TRANS: Function): Promise<Function> {
+    let _this = this
+    return new Promise(async function (resolve, reject) {
+      try {
+        const isSuccess = await _this.pgConnect()
+        if (isSuccess) {
+          await _this.dbServer.query('BEGIN')
+          const res = await TRANS()
+          _this.dbServer.query('COMMIT')
+          // return res
+          resolve(res);
+        } else {
+          reject('连接数据库失败');
+          console.error('连接数据库失败')
+        }
+      } catch (e) {
+        debugger
+        if (_this.dbServer) {
+          _this.dbServer.query('ROLLBACK')
+        }
+        reject(e);
+      } finally {
+        debugger
+        if (_this.dbServer) {
+          _this.dbServer.release()
+        }
+        console.log('完成')
       }
-    } catch (e) {
-      if (this.dbServer) {
-        await this.dbServer.query('ROLLBACK')
-      }
-      throw e
-    } finally {
-      debugger
-      if (this.dbServer) {
-        this.dbServer.release()
-      }
-      console.log('完成')
-    }
+
+    });
+
   }
 
 }

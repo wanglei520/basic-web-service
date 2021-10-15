@@ -27,6 +27,25 @@ class WebSocket implements websocket {
         if (request === 'ping') {
           console.log('接收消息：', request)
           connection.send('{"message":"pong"}')
+          // const environment = {
+          //   name: 'environment',
+          //   data: {
+          //     result: {
+          //       weather: { text: 'socket', temperature: '16/22°C' },
+          //       comfort: '优',
+          //       wind: '东北风 3-4级',
+          //       light: '0.2Lux',
+          //       uvb: '弱',
+          //       pm25: '18',
+          //       co2: '18',
+          //       humidity: '18%',
+          //       o2: '37',
+          //       noise: '34'
+          //     }
+          //   }
+          // }
+          // const message = JSON.stringify(environment)
+          // connection.send(message)
           return
         }
         const reqObj: any = JSON.parse(request)

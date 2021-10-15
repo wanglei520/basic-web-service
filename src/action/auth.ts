@@ -21,6 +21,7 @@ const auth = (app: any, serves: Serve[]): void => {
     const _serve = serves.find(ser => {
       return ser.url === req.url
     })
+    debugger
     if (_serve) {
       if (_serve.isAuth) {
         // todo 访问认证 如果token认证通过就可以访问
@@ -33,7 +34,8 @@ const auth = (app: any, serves: Serve[]): void => {
       }
     } else {
       // TODO 处理返回结果
-      res.status(404).send('地址不存在！')
+      next();
+      // res.status(404).send('地址不存在！')
     }
     debugger
     console.log('%s %s', req.method, req.url);
