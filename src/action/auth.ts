@@ -1,4 +1,4 @@
-import Serve from "/#/Serve";
+import Serve from "../utils/Serve";
 
 /**
  * 请求认证

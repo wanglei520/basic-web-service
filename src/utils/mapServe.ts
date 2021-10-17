@@ -1,12 +1,12 @@
 
-import Serve from "../../types/Serve";
+import Serve from "./Serve";
 
-export function getPath(serversContext){
+export function getPath(serversContext) {
   console.log('testpath：', __dirname)
   console.log('testserversContext.keys()：', serversContext.keys())
 }
 
-export function mapServe(serversContext:any): Serve[]{
+export function mapServe(serversContext: any): Serve[] {
   let serves: Serve[] = [];
   serversContext.keys().forEach((data: any) => {
     const serverModule = serversContext(data)

@@ -1,6 +1,6 @@
 const fs = require('fs'); //文件模块
 const path = require('path'); //路径模块
-import Serve from "../../types/Serve";
+import Serve from "../utils/Serve";
 const swagger = (app, express) => {
   let serve = new Serve()
   serve.url = '/'

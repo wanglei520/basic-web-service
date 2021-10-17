@@ -1,5 +1,5 @@
 import Result from "../../../types/Result";
-import Serve from "../../../types/Serve";
+import Serve from "../../utils/Serve";
 import { Postgres, ConnectionObj } from "../../Data"
 
 const pgconobj: ConnectionObj = {

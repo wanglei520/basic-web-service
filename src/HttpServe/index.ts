@@ -1,9 +1,9 @@
 import IPAdress from "../../utils/IPAdress";
 // import auth from "../action/auth";
-import Serve from "../../types/Serve";
+import Serve from "../utils/Serve";
 import bodyParser from 'body-parser'
-import {mapServe} from "../utils/mapServe";
-import {LogRegister} from "../Log/index"
+import { mapServe } from "../utils/mapServe";
+import { LogRegister } from "../Log/index"
 
 export default function HttpServe(swagger: Function = null) {
   const path = require('path')
@@ -34,10 +34,14 @@ export default function HttpServe(swagger: Function = null) {
   // }
   // 服务注册
   serves.forEach(ser => {
-    const { url, type,Middleware, response } = ser;
+    const { url, type, response } = ser;
     // console.log(url)
     // Middleware[0]()
-    app[type](url, Middleware, response);
+    const middleware = [(req, res, next) => {
+      console.log('middleware中间件调用测试！')
+      next()
+    }]
+    app[type](url, [...middleware, response]);
     // app[ser.type](ser.url,...ser.Middleware, ser.response)
   })
 

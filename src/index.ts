@@ -5,7 +5,7 @@ import HttpServe from './HttpServe/index'
 import { swagger } from './swagger/index'
 HttpServe(swagger)
 
-import './Data/test'
+// import './Data/test'
 
 // import WebSocket from './socket/socket'
 
