@@ -46,10 +46,10 @@ var formatText = {
     logText += "request time: " + resTime + "\n";
     return logText;
   },
-  response: function (ctx, resTime) {
+  response: function (ctx, resTime, result) {
     debugger
     var logText = new String();
-    const request = {method:ctx.method, path:ctx.path,originalUrl:ctx.originalUrl,ip:ctx.ip,query:ctx.query,body:ctx.body}
+    const request = { method: ctx.method, path: ctx.path, originalUrl: ctx.originalUrl, ip: ctx.ip, query: ctx.query, body: ctx.body }
     //响应日志开始
     logText += "\n" + "*************** response log start ***************" + "\n";
     //添加请求日志
@@ -57,7 +57,7 @@ var formatText = {
     //响应状态码
     logText += "response status: " + ctx.status + "\n";
     //响应内容
-    logText += "response body: " + "\n" + JSON.stringify(ctx.body) + "\n";
+    logText += "response body: " + "\n" + JSON.stringify(ctx.response.body) + "\n";
     //响应日志结束
     logText += "*************** response log end ***************" + "\n";
     return logText;
@@ -76,7 +76,7 @@ var formatText = {
   error: function (ctx, err, resTime) {
     debugger
     var logText = new String();
-    const request = {method:ctx.method, path:ctx.path,originalUrl:ctx.originalUrl,ip:ctx.ip,query:ctx.query,body:ctx.body}
+    const request = { method: ctx.method, path: ctx.path, originalUrl: ctx.originalUrl, ip: ctx.ip, query: ctx.query, body: ctx.body }
     //错误信息开始
     logText += "\n" + "*************** error log start ***************" + "\n";
     //添加请求日志
@@ -108,9 +108,9 @@ export default {
     }
   },
   //封装响应日志
-  logResponse: function (ctx, resTime) {
+  logResponse: function (ctx, resTime, result = {}) {
     if (ctx) {
-      resLogger.info(formatText.response(ctx, resTime));
+      resLogger.info(formatText.response(ctx, resTime, result));
     }
   },
   //封装操作日志

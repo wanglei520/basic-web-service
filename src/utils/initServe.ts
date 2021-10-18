@@ -1,5 +1,5 @@
 import Result from "../../types/Result";
-import Serve from "../../types/Serve";
+import Serve from "./Serve";
 import { Postgres, ConnectionObj } from "../Data"
 
 // 从配置环境中获取信息

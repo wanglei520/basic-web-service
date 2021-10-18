@@ -1,5 +1,5 @@
 import Result from "../../../types/Result";
-import Serve from "../../../types/Serve";
+import Serve from "../../utils/Serve";
 
 let ser1: Serve = new Serve();
 ser1.url = '/api/test3'
